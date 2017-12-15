@@ -246,6 +246,26 @@ To connect over VNC, you need to know the IP address of the Pi. If you are using
 
 When VNC is selected, there will be no GUI present on any attached display, as all output is redirected over the VNC network connection. Alternatively, appending `vncshare` to the argument list instead of `vncinstall` will share the screen between the locally attached display and redirect it over the VNC network connection simultaneously.
 
+#### Headless steps summary
+1. download pinn lite from sourceforge
+2. add empty ssh fileto `pinn-lite` dir (`cd pinn-lite; touch ssh`)
+3. add `wpa_supplicant.conf` into `pinn-lite` dir, example file
+```
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid="some ssid (no spaces)"
+    psk="password here"
+}
+```
+4. add `vncinstall ssh` to `pinn-lite/recovery.cmdline`
+5. format sd card and copy all files under `pinn-lite` dir to it
+6. put sd card in Raspberry Pi and connect via vnc
+7. install Raspbian Lite (via network)
+8. press ok to restart the pi
+9. ssh to pi@{ip address}
+
 ### How to access the shell or SSH into PINN
 
 1. Once the PINN GUI is launched, the busybox shell can be accessed by pressing CTRL-ALT-F2. Use the Username of `root` and password of `raspberry`. Use CTL-ALT-F1 to get back to the GUI. This can be useful for editing recovery.cmdline locally or performing other maintenance tasks on your SD card.
